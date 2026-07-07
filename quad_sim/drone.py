@@ -25,7 +25,7 @@ class Drone:
         self.w_back = 0.0
         self.w_left = 0.0
 
-    def step(self, w_front, w_right, w_back, w_left, dt=p.DT):
+    def step(self, w_front, w_right, w_back, w_left, dt=p.DT, wind_ax=0.0, wind_ay=0.0):
         self.w_front = w_front
         self.w_right = w_right
         self.w_back = w_back
@@ -56,8 +56,8 @@ class Drone:
         Fy_world = F_total * dir_y
         Fz_world = F_total * dir_z - p.MASS * p.GRAVITY
 
-        ax = Fx_world / p.MASS
-        ay = Fy_world / p.MASS
+        ax = Fx_world / p.MASS + wind_ax
+        ay = Fy_world / p.MASS + wind_ay
         az = Fz_world / p.MASS
 
         alpha_phi = torque_roll / p.IXX
@@ -86,6 +86,11 @@ class Drone:
             self.z = 0.0
             if self.vz < 0.0:
                 self.vz = 0.0
+
+        if self.z <= 0.0:
+            friction = min(1.0, p.GROUND_FRICTION * dt)
+            self.vx -= self.vx * friction
+            self.vy -= self.vy * friction
 
     def get_state(self):
         return {

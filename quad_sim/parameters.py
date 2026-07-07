@@ -34,3 +34,29 @@ MAX_TILT_ANGLE = math.radians(60.0)
 TORQUE_ROLL_MAX = 0.4
 TORQUE_PITCH_MAX = 0.4
 TORQUE_YAW_MAX = 0.2
+
+DRONE_COLLISION_RADIUS_M = 0.25
+GROUND_FRICTION = 3.0  # 1/s, decelerates horizontal sliding once landed
+
+# --- Obstacles ---
+OBSTACLES = [
+    # (x, y, radius) in meters
+    (4.0, 2.0, 0.8),
+    (-3.0, 4.0, 1.0),
+    (-5.0, -3.0, 0.7),
+    (3.0, -5.0, 0.9),
+    (0.0, 6.0, 0.6),
+    (7.0, -1.0, 1.1),
+]
+
+# --- Wind ---
+WIND_ACCEL_STD = 0.6       # m/s^2, std dev of the random-walk wind acceleration
+WIND_MAX_ACCEL = 2.0       # m/s^2, clamp so gusts can't get absurd
+WIND_DAMPING = 0.5         # 1/s, pulls wind acceleration back toward zero over time
+
+# --- Waypoints ---
+WAYPOINT_REACH_RADIUS_M = 0.3
+
+# --- Battery ---
+BATTERY_FULL_SECONDS = 120.0   # seconds of hover-power flight on a full charge
+BATTERY_LOW_FRACTION = 0.15    # below this, force an auto-land
